@@ -24,10 +24,7 @@ test.describe('Модуль Профиль пользователя', async () =
       await navBar.gotoProfileSettings();
       await settingsPage.fillBio(testUser.bio);
       await settingsPage.updateSettings();
-
-      //Задержка перед обновлением страницы
-      await page.waitForTimeout(500);
-      await page.reload();
+      await settingsPage.refresh();
 
       await expect(settingsPage.bioField).toHaveValue(testUser.bio);
    });
@@ -45,6 +42,23 @@ test.describe('Модуль Профиль пользователя', async () =
       await settingsPage.refresh();
 
       await expect(settingsPage.bioField).toHaveValue('');
+   });
+
+   test('Пользователь может заменить своё BIO', async ({ page }) => {
+      const navBar = new NavigationMenu(page);
+      const settingsPage = new ProfileSettingsPage(page);
+      const newBio = createTestUser().bio;
+
+      await navBar.gotoProfileSettings();
+      await settingsPage.fillBio(testUser.bio);
+      await settingsPage.updateSettings();
+      await settingsPage.refresh();
+      await settingsPage.clearBio();
+      await settingsPage.fillBio(newBio);
+      await settingsPage.updateSettings();
+      await settingsPage.refresh();
+
+      await expect(settingsPage.bioField).toHaveValue(newBio);
    });
 
    test('Пользователь может Установить аватарку', async ({ page }) => {
