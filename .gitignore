@@ -1,0 +1,10 @@
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+testcases.txt
+tests/tmp.spec.js
+tests/test1.spec.js
+tests/learnPOM.spec.js
+tests/articles.spec.js
